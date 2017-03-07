@@ -9,7 +9,7 @@ public class GhostStatus : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		m_Health = 300;
+		m_Health = 150;
 	}
 	
 	// Update is called once per frame

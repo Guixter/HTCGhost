@@ -4,28 +4,43 @@ using UnityEngine;
 
 public class CollisionPumpkin : MonoBehaviour {
 
-	public Light light;
+	private Light light;
 	private SphereCollider collider;
 
 	// Use this for initialization
 	void Start () {
-		if (!light) {
+
+		StartCoroutine (FindLight());
+
+
+	}
+
+	IEnumerator FindLight() {
+		
+		yield return new WaitForSeconds (0.5f);
+
+		if (GameObject.FindGameObjectWithTag ("torchLight").activeInHierarchy) {
+
 			light = GameObject.FindGameObjectWithTag ("torchLight").GetComponent<Light> ();
+			collider = GetComponent<SphereCollider> ();
 		}
-		collider = GetComponent<SphereCollider> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 pos = transform.position + collider.center;
-		Vector3 lightPos = light.transform.position;
 
-		Vector3 lightToPump = (pos - lightPos).normalized;
-		Vector3 forwardVector = light.transform.forward;
+		if (collider && light) {
+			
+			Vector3 pos = transform.position + collider.center;
+			Vector3 lightPos = light.transform.position;
 
-		if (Vector3.Dot (lightToPump, forwardVector) > Mathf.Cos (light.spotAngle * Mathf.PI / 360)) {
-			GetComponent<GhostStatus> ().m_Health--;
-			SteamVR_Controller.Input ((int) light.GetComponent<SteamVR_TrackedObject> ().index).TriggerHapticPulse (2000);
+			Vector3 lightToPump = (pos - lightPos).normalized;
+			Vector3 forwardVector = light.transform.forward;
+
+			if (Vector3.Dot (lightToPump, forwardVector) > Mathf.Cos (light.spotAngle * Mathf.PI / 360)) {
+				GetComponent<GhostStatus> ().m_Health--;
+				SteamVR_Controller.Input ((int)light.GetComponent<SteamVR_TrackedObject> ().index).TriggerHapticPulse (2000);
+			}
 		}
 	}
 }

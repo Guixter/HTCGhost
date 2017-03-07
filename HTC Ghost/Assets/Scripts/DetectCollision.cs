@@ -17,6 +17,7 @@ public class DetectCollision : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Pumpkin")) {
 			Debug.Log ("GAME OVER");
+			Destroy (other.gameObject);
 		}
 	}
 }

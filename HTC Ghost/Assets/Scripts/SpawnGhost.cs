@@ -6,6 +6,7 @@ public class SpawnGhost : MonoBehaviour {
 
 	public GameObject ghost;
 	public GameObject player;
+	public GameObject target;
 
 	private CharacterController characterController;
 
@@ -42,7 +43,7 @@ public class SpawnGhost : MonoBehaviour {
 			Vector3 newDirection = Vector3.RotateTowards (spawn, m_CameraDirection, 1.0f, 0.0f);
 
 			//m_CameraPosition = player.transform.GetChild (0).position;
-			m_CameraPosition = Camera.main.transform.position;
+			m_CameraPosition = target.transform.position;
 
 		//	Vector3 newDirection = Vector3.RotateTowards (transform.forward, m_CameraDirection, step, 0.0f);
 

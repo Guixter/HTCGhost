@@ -22,7 +22,7 @@ public class MoveToPlayer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!m_FirstTime) {
-			m_CameraPosition = player.transform.GetChild (0).transform.position;
+			m_CameraPosition = Camera.main.transform.position;
 
 			m_CameraDirection = m_CameraPosition - transform.position;
 			float step = 0.1f * Time.deltaTime;
@@ -32,7 +32,7 @@ public class MoveToPlayer : MonoBehaviour {
 			m_FirstTime = true;
 		}
 
-		m_CameraPosition = player.transform.GetChild (0).transform.position;
+		m_CameraPosition = Camera.main.transform.position;
 
 		m_Rb.velocity = (m_CameraPosition - transform.position).normalized * Constants.GHOST_SPEED;  
 		m_Rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
