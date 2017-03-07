@@ -40,13 +40,11 @@ public class DetectionCollsions : MonoBehaviour {
 		float angleCone = spotlight.spotAngle;
 		distanceDuCercleRef = spotlight.range;
 		rayonDuCercleRef = distanceDuCercleRef * Mathf.Abs (Mathf.Tan (angleCone * Mathf.PI / 180));
-		Debug.Log ("rayon du cercle " + rayonDuCercleRef);
-		Debug.Log ("distance du cercle " + distanceDuCercleRef);
 
 		Vector3 origine = this.transform.position;
 		float rayonDesSpheres = rayonDuCercleRef / 2;
-		Vector3 versAvant = this.transform.forward;
-		Debug.Log ("forward vector " + versAvant);
+		Vector3 versAvant = spotlight.transform.forward;
+
 		float pas = 2*Mathf.PI / nbSpheres;
 		float angleCourant = 0;
 		Vector3 directionCourante = new Vector3 ();
@@ -65,7 +63,6 @@ public class DetectionCollsions : MonoBehaviour {
 					enContact.Add (colliderTouche);
 				}
 			}
-			Debug.Log ("nb en contact " + enContact.Count);
 
 	}
 }
