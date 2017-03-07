@@ -38,7 +38,13 @@ public class SpawnGhost : MonoBehaviour {
 		if((characterController.isGrounded && m_Grounded) || (characterController.isGrounded && m_CanSpawn)) {
 			m_Grounded = false;
 
-			m_CameraPosition = player.transform.GetChild (0).transform.position;
+
+//Vector3 spawn = player.transform.forward.normalized * Constants.GHOST_SPAWN_RADIUS * Quaternion.Euler(45.0f,0.0f,0.0f);
+			Vector3 spawn =  Quaternion.Euler(45,45,0) * (player.transform.forward.normalized * Constants.GHOST_SPAWN_RADIUS);
+
+			Vector3 newDirection = Vector3.RotateTowards (spawn, m_CameraDirection, 1.0f, 0.0f);
+
+			m_CameraPosition = player.transform.GetChild (0).position;
 
 		//	Vector3 newDirection = Vector3.RotateTowards (transform.forward, m_CameraDirection, step, 0.0f);
 
