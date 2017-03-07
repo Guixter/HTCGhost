@@ -14,7 +14,6 @@ public class SpawnGhost : MonoBehaviour {
 
 	private Rigidbody m_Rb;
 
-	private bool m_Grounded;
 	private bool m_CanSpawn;
 	private bool m_CoroutineStarted;
 
@@ -24,7 +23,6 @@ public class SpawnGhost : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		
-		m_Grounded = true;
 		m_CanSpawn = true;
 		m_CoroutineStarted = false;
 
@@ -36,9 +34,11 @@ public class SpawnGhost : MonoBehaviour {
 
 		if(m_CanSpawn) {
 
+			float randRotationX = Random.Range (-15.0f, 45.0f);
 
-//Vector3 spawn = player.transform.forward.normalized * Constants.GHOST_SPAWN_RADIUS * Quaternion.Euler(45.0f,0.0f,0.0f);
-			Vector3 spawn =  Quaternion.Euler(45,45,0) * (player.transform.forward.normalized * Constants.GHOST_SPAWN_RADIUS);
+			float randRotationY = Random.Range(0.0f, 360.0f);
+
+			Vector3 spawn =  m_CameraPosition + Quaternion.Euler(randRotationX,randRotationY,0) * (player.transform.forward.normalized * Constants.GHOST_SPAWN_RADIUS);
 
 			Vector3 newDirection = Vector3.RotateTowards (spawn, m_CameraDirection, 1.0f, 0.0f);
 
@@ -49,7 +49,7 @@ public class SpawnGhost : MonoBehaviour {
 
 			Vector3 spawnLocation = m_CameraPosition + new Vector3 (0.0f, 0.0f, Constants.GHOST_SPAWN_RADIUS);
 			Quaternion spawnRotation = Quaternion.Euler (-90.0f, 0.0f, 0.0f);
-			Instantiate (ghost, spawnLocation, spawnRotation);
+			Instantiate (ghost, spawn, spawnRotation);
 
 			m_CanSpawn = false;
 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MoveToPlayer : MonoBehaviour {
 
-	private GameObject player;
-
 	private Rigidbody m_Rb;
 	private Vector3 m_CameraPosition;
 	private Vector3 m_CameraDirection;
@@ -15,7 +13,6 @@ public class MoveToPlayer : MonoBehaviour {
 	void Start () {
 		
 		m_Rb = GetComponent<Rigidbody> ();
-		player = GameObject.FindGameObjectWithTag ("Player");
 		m_FirstTime = false;
 	}
 	
