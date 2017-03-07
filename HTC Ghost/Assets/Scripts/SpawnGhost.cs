@@ -5,8 +5,8 @@ using UnityEngine;
 public class SpawnGhost : MonoBehaviour {
 
 	public GameObject ghost;
+	public GameObject player;
 
-	private GameObject player;
 	private CharacterController characterController;
 
 	private GameObject m_GhostSpawned;
@@ -24,19 +24,16 @@ public class SpawnGhost : MonoBehaviour {
 	void Start () {
 		
 		m_Grounded = true;
-		m_CanSpawn = false;
+		m_CanSpawn = true;
 		m_CoroutineStarted = false;
 
-		player = GameObject.FindGameObjectWithTag ("Player");
-		characterController = player.GetComponent<CharacterController> ();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if((characterController.isGrounded && m_Grounded) || (characterController.isGrounded && m_CanSpawn)) {
-			m_Grounded = false;
+		if(m_CanSpawn) {
 
 
 //Vector3 spawn = player.transform.forward.normalized * Constants.GHOST_SPAWN_RADIUS * Quaternion.Euler(45.0f,0.0f,0.0f);
@@ -65,7 +62,7 @@ public class SpawnGhost : MonoBehaviour {
 	IEnumerator SpawnTimer() {
 		
 		m_CoroutineStarted = true;
-		yield return new WaitForSeconds(2);
+		yield return new WaitForSeconds(5);
 		m_CanSpawn = true;
 		StartCoroutine(SpawnTimer());
 	}
