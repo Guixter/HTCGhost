@@ -10,6 +10,6 @@ public class MainMenuManager : MonoBehaviour {
 	}
 
 	public void Play() {
-		//SceneManager.LoadScene ("SceneName");
+		SceneManager.LoadScene ("Warren");
 	}
 }
