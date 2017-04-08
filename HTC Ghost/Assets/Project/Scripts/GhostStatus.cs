@@ -6,16 +6,21 @@ public class GhostStatus : MonoBehaviour {
 
 	public int m_Health;
 	public float m_Speed;
+	public int score;
 
 	// Use this for initialization
 	void Start () {
-		m_Health = 150;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (m_Health <= 0) {
-			Destroy (this.gameObject);
+			if (GameObject.Find ("DataOnScreen") != null) {
+				PrintDataOnScreen print = GameObject.Find ("DataOnScreen").GetComponent<PrintDataOnScreen> ();
+				print.playerScore += this.score;
+				print.PrintScore ();
+				Destroy (this.gameObject);
+			}
 		}
 	}
 

@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class PrintDataOnScreen : MonoBehaviour {
 
 
-	private int livesLeftOnScreen = 0;
-	private int scoreOnScreen = 0;
+	public int playerLife;
+	public int playerScore;
+
+	/*private int livesLeftOnScreen = 0;
+	private int scoreOnScreen = 0;*/
 
 	private Transform score;
 
@@ -32,11 +35,20 @@ public class PrintDataOnScreen : MonoBehaviour {
 		anchorMaxRef = lifePrefab.rectTransform.anchorMax;
 		anchorMinRef = lifePrefab.rectTransform.anchorMin;
 		this.initLives (initialNumberOfLives);
+
+		playerLife = initialNumberOfLives;
+		playerScore = 0;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		setScoreOnScreen (scoreOnScreen + 1);
+		//PrintScore ();
+	}
+
+	private void CheckGameOver() {
+		if (playerLife <= 0) {
+			Debug.Log ("GAME OVER");
+		}
 	}
 
 	private void initLives(int initialNumberOfLives){
@@ -72,13 +84,15 @@ public class PrintDataOnScreen : MonoBehaviour {
 	
 	}
 
-	public void currentLife(int lifeMax, int curLife){
-		initLives(lifeMax);
-		livesLost (lifeMax - curLife);
+	public void PrintCurrentLife(){
+		initLives(initialNumberOfLives);
+		livesLost (initialNumberOfLives - playerLife);
+		CheckGameOver();
 	}
 
-	public void setScoreOnScreen(int newScore){
-		this.scoreOnScreen = newScore;
-		this.score.GetComponent<Text> ().text = "Score : " + newScore;
+	public void PrintScore() {
+		if (this.score.gameObject.active) {
+			this.score.GetComponent<Text> ().text = "Score : " + playerScore;
+		}
 	}
 }
