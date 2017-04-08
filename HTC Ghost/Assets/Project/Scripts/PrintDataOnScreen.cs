@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PrintDataOnScreen : MonoBehaviour {
 
@@ -26,7 +27,6 @@ public class PrintDataOnScreen : MonoBehaviour {
 	public int initialNumberOfLives;
 	public Sprite off;
 
-
 	// Use this for initialization
 	void Start () {
 		this.score = this.transform.FindChild ("Score");
@@ -43,11 +43,16 @@ public class PrintDataOnScreen : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//PrintScore ();
+
+		/*if (Controller.GetPressDown (Valve.VR.EVRButtonId.k_EButton_ApplicationMenu)) {
+			Time.timeScale = 0;
+		}*/
+
 	}
 
 	private void CheckGameOver() {
 		if (playerLife <= 0) {
-			Debug.Log ("GAME OVER");
+			SceneManager.LoadScene ("Menu");
 		}
 	}
 
