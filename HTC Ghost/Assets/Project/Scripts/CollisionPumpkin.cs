@@ -11,8 +11,6 @@ public class CollisionPumpkin : MonoBehaviour {
 	void Start () {
 
 		StartCoroutine (FindLight());
-
-
 	}
 
 	IEnumerator FindLight() {
