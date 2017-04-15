@@ -20,5 +20,6 @@ public static class Constants {
 		- credits, etc
 		- prefabs de citrouilles différentes (et système de vague)
 		- stats du prof
+		- corriger le problème de collision de la lumière dans la citrouille quand la citrouille est trop proche
 	*/
 }
