@@ -34,20 +34,21 @@ public class SpawnGhost : MonoBehaviour {
 
 		if(m_CanSpawn) {
 
-			float randRotationX = Random.Range (-15.0f, 45.0f);
+			float randRotationX = Random.Range (Constants.GHOST_SPAWN_ANGLE_MIN, Constants.GHOST_SPAWN_ANGLE_MAX);
 
 			float randRotationY = Random.Range(0.0f, 360.0f);
 
-			Vector3 spawn =  m_CameraPosition + Quaternion.Euler(randRotationX,randRotationY,0) * (player.transform.forward.normalized * Constants.GHOST_SPAWN_RADIUS);
 
-			Vector3 newDirection = Vector3.RotateTowards (spawn, m_CameraDirection, 1.0f, 0.0f);
+			//Vector3 newDirection = Vector3.RotateTowards (spawn, m_CameraDirection, 1.0f, 0.0f);
 
 			//m_CameraPosition = player.transform.GetChild (0).position;
 			m_CameraPosition = target.transform.position;
 
-		//	Vector3 newDirection = Vector3.RotateTowards (transform.forward, m_CameraDirection, step, 0.0f);
+			//	Vector3 newDirection = Vector3.RotateTowards (transform.forward, m_CameraDirection, step, 0.0f);
 
-			Vector3 spawnLocation = m_CameraPosition + new Vector3 (0.0f, 0.0f, Constants.GHOST_SPAWN_RADIUS);
+			//Vector3 spawnLocation = m_CameraPosition + new Vector3 (0.0f, 0.0f, Constants.GHOST_SPAWN_RADIUS);
+
+			Vector3 spawn =  m_CameraPosition + (Quaternion.Euler(0, randRotationY, 0) * Quaternion.Euler(randRotationX, 0, 0)) * (Vector3.forward * Constants.GHOST_SPAWN_RADIUS);
 			Quaternion spawnRotation = Quaternion.Euler (-90.0f, 0.0f, 0.0f);
 			Instantiate (ghost, spawn, spawnRotation);
 
@@ -63,7 +64,7 @@ public class SpawnGhost : MonoBehaviour {
 	IEnumerator SpawnTimer() {
 		
 		m_CoroutineStarted = true;
-		yield return new WaitForSeconds(5);
+		yield return new WaitForSeconds(Constants.GHOST_SPAWN_TIME);
 		m_CanSpawn = true;
 		StartCoroutine(SpawnTimer());
 	}

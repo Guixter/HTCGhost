@@ -9,6 +9,7 @@ public class PrintDataOnScreen : MonoBehaviour {
 
 	public int playerLife;
 	public int playerScore;
+	public GameObject parent;
 
 	/*private int livesLeftOnScreen = 0;
 	private int scoreOnScreen = 0;*/
@@ -68,7 +69,7 @@ public class PrintDataOnScreen : MonoBehaviour {
 			
 			Image curLife = GameObject.Instantiate (lifePrefab);
 
-			curLife.transform.SetParent (this.canvas.transform, false);
+			curLife.transform.SetParent (parent.transform, false);
 			curLife.rectTransform.anchorMin = anchorMinRef + curIndex * translation;
 			curLife.rectTransform.anchorMax = anchorMaxRef + curIndex * translation;
 			this.imagesOfLives.Add (curLife);
