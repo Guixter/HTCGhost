@@ -29,7 +29,7 @@ public class CollisionPumpkin : MonoBehaviour {
 
 		if (pumpkinCollider && flashlight) {
 			
-			Vector3 pos = transform.position + pumpkinCollider.center;
+			Vector3 pos = transform.position;// + pumpkinCollider.center;
 			Vector3 lightPos = flashlight.transform.position;
 
 			Vector3 lightToPump = (pos - lightPos).normalized;

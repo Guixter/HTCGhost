@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SpawnGhost : MonoBehaviour {
 
-	public GameObject ghost;
+	public GameObject ghostRed;
+	public GameObject ghostGreen;
 	public GameObject player;
 	public GameObject target;
 
@@ -19,6 +20,10 @@ public class SpawnGhost : MonoBehaviour {
 
 	private Vector3 m_CameraPosition;
 	private Vector3 m_CameraDirection;
+	private int ghostRedCount = 5;
+	private int ghostCount;
+	private float ghostSpawnTime = Constants.GHOST_SPAWN_TIME;
+
 
 	// Use this for initialization
 	void Start () {
@@ -50,8 +55,20 @@ public class SpawnGhost : MonoBehaviour {
 
 			Vector3 spawn =  m_CameraPosition + (Quaternion.Euler(0, randRotationY, 0) * Quaternion.Euler(randRotationX, 0, 0)) * (Vector3.forward * Constants.GHOST_SPAWN_RADIUS);
 			Quaternion spawnRotation = Quaternion.Euler (-90.0f, 0.0f, 0.0f);
-			Instantiate (ghost, spawn, spawnRotation);
 
+			ghostRedCount--;
+			if (ghostRedCount <= 0) {
+				ghostRedCount = 5;
+				Instantiate (ghostGreen, spawn, spawnRotation);
+			}
+			else {
+				Instantiate (ghostRed, spawn, spawnRotation);
+			}
+			ghostCount++;
+
+			if (ghostCount % 5 == 0)
+				ghostSpawnTime = ghostSpawnTime - 1.0f;
+			
 			m_CanSpawn = false;
 
 			if (!m_CoroutineStarted) StartCoroutine(SpawnTimer());
@@ -64,7 +81,7 @@ public class SpawnGhost : MonoBehaviour {
 	IEnumerator SpawnTimer() {
 		
 		m_CoroutineStarted = true;
-		yield return new WaitForSeconds(Constants.GHOST_SPAWN_TIME);
+		yield return new WaitForSeconds(ghostSpawnTime);
 		m_CanSpawn = true;
 		StartCoroutine(SpawnTimer());
 	}

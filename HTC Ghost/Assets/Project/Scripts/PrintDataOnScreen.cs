@@ -14,7 +14,7 @@ public class PrintDataOnScreen : MonoBehaviour {
 	private Vector2 anchorMinRef;
 	private Vector2 anchorMaxRef;
 	private List<Image> imagesOfLives;
-
+	private bool isGameOver;
 
 	public Image lifePrefab;
 	public Vector2 translation;
@@ -33,7 +33,6 @@ public class PrintDataOnScreen : MonoBehaviour {
 
 		this.score = this.transform.FindChild ("Score");
 		//this.canvas = FindObjectOfType<Canvas> ();
-		Debug.Log (score);
 		anchorMaxRef = lifePrefab.rectTransform.anchorMax;
 		anchorMinRef = lifePrefab.rectTransform.anchorMin;
 		this.initLives (initialNumberOfLives);
@@ -54,16 +53,29 @@ public class PrintDataOnScreen : MonoBehaviour {
 
 	private void CheckGameOver() {
 		if (playerLife <= 0) {
-			
+			isGameOver = true;
+			PlayerPrefs.SetInt ("PlayerScore", playerScore);
+
+			AudioSource deathSound = GetComponent<AudioSource>();
+			deathSound.Play();
+
 			if (playerScore > highscore) {
 				PlayerPrefs.SetInt ("Highscore", playerScore);
 			}
 
-			Time.timeScale = 0;
+		/*	Time.timeScale = 0;
 			gameOverText.GetComponent<Text> ().text = "Your score : " + playerScore + "\nBest score : " + PlayerPrefs.GetInt ("Highscore");
 			gameOverCanvas.SetActive (true);
-			//SceneManager.LoadScene ("Menu");
+*/
+			SceneManager.LoadScene ("GameOver");
+			//Waitt();
 		}
+	}
+
+	IEnumerator Waitt() {
+
+		yield return new WaitForSeconds(3.0f);
+		SceneManager.LoadScene ("GameOver");
 	}
 
 	private void initLives(int initialNumberOfLives){
@@ -102,7 +114,7 @@ public class PrintDataOnScreen : MonoBehaviour {
 	public void PrintCurrentLife(){
 		initLives(initialNumberOfLives);
 		livesLost (initialNumberOfLives - playerLife);
-		CheckGameOver();
+		if (!isGameOver) CheckGameOver();
 	}
 
 	public void PrintScore() {

@@ -15,11 +15,13 @@ public static class Constants {
 
 	/*
 	TODO :
-		- sons (mort, ...)
+		- sons (mort, ...) (GOOD)
 		- prefabs de citrouilles différentes (et système de vague)
-		- corriger le problème de collision de la lumière dans la citrouille quand la citrouille est trop proche (à tester)
-		- best score à tester
-		- vérifier la cohérence du gameover
+		- corriger le problème de collision de la lumière dans la citrouille quand la citrouille est trop proche (GOOD)
+		- best score à tester (GOOD)
+		- vérifier la cohérence du gameover (affichage de travers et pas de selecction)
 		- stats du prof
+
+		- le curseur decale sur le menu
 	*/
 }
