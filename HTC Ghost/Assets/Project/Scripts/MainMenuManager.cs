@@ -13,4 +13,7 @@ public class MainMenuManager : MonoBehaviour {
 		SceneManager.LoadScene ("Warren");
 	}
 
+	public void Menu() {
+		SceneManager.LoadScene ("Menu");
+	}
 }
