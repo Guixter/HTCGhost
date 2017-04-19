@@ -7,17 +7,10 @@ using UnityEngine.SceneManagement;
 public class PrintDataOnScreen : MonoBehaviour {
 
 
-	public int playerLife;
-	public int playerScore;
-	public GameObject parent;
-
-	/*private int livesLeftOnScreen = 0;
-	private int scoreOnScreen = 0;*/
+	private int highscore;
 
 	private Transform score;
-
-	private Canvas canvas;
-
+	//private Canvas canvas;
 	private Vector2 anchorMinRef;
 	private Vector2 anchorMaxRef;
 	private List<Image> imagesOfLives;
@@ -28,10 +21,17 @@ public class PrintDataOnScreen : MonoBehaviour {
 	public int initialNumberOfLives;
 	public Sprite off;
 
+	public int playerLife;
+	public int playerScore;
+	public GameObject parent;
+
 	// Use this for initialization
 	void Start () {
+		
+		highscore = PlayerPrefs.GetInt ("Highscore");
+
 		this.score = this.transform.FindChild ("Score");
-		this.canvas = FindObjectOfType<Canvas> ();
+		//this.canvas = FindObjectOfType<Canvas> ();
 		Debug.Log (score);
 		anchorMaxRef = lifePrefab.rectTransform.anchorMax;
 		anchorMinRef = lifePrefab.rectTransform.anchorMin;
@@ -53,6 +53,11 @@ public class PrintDataOnScreen : MonoBehaviour {
 
 	private void CheckGameOver() {
 		if (playerLife <= 0) {
+			
+			if (playerScore > highscore) {
+				PlayerPrefs.SetInt ("Highscore", playerScore);
+			}
+
 			SceneManager.LoadScene ("Menu");
 		}
 	}
@@ -97,7 +102,7 @@ public class PrintDataOnScreen : MonoBehaviour {
 	}
 
 	public void PrintScore() {
-		if (this.score.gameObject.active) {
+		if (this.score.gameObject.activeInHierarchy) {
 			this.score.GetComponent<Text> ().text = "Score : " + playerScore;
 		}
 	}

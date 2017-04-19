@@ -57,7 +57,7 @@ public class SpawnGhost : MonoBehaviour {
 			if (!m_CoroutineStarted) StartCoroutine(SpawnTimer());
 		}
 
-
+	 
 
 	}
 
