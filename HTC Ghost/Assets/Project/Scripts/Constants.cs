@@ -16,10 +16,10 @@ public static class Constants {
 	/*
 	TODO :
 		- sons (mort, ...)
-		- écran de gameover
-		- credits, etc
 		- prefabs de citrouilles différentes (et système de vague)
+		- corriger le problème de collision de la lumière dans la citrouille quand la citrouille est trop proche (à tester)
+		- best score à tester
+		- vérifier la cohérence du gameover
 		- stats du prof
-		- corriger le problème de collision de la lumière dans la citrouille quand la citrouille est trop proche
 	*/
 }

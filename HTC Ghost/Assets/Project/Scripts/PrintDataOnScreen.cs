@@ -20,6 +20,7 @@ public class PrintDataOnScreen : MonoBehaviour {
 	public Vector2 translation;
 	public int initialNumberOfLives;
 	public Sprite off;
+	public GameObject gameOverCanvas, gameOverText;
 
 	public int playerLife;
 	public int playerScore;
@@ -58,7 +59,10 @@ public class PrintDataOnScreen : MonoBehaviour {
 				PlayerPrefs.SetInt ("Highscore", playerScore);
 			}
 
-			SceneManager.LoadScene ("Menu");
+			Time.timeScale = 0;
+			gameOverText.GetComponent<Text> ().text = "Your score : " + playerScore + "\nBest score : " + PlayerPrefs.GetInt ("Highscore");
+			gameOverCanvas.SetActive (true);
+			//SceneManager.LoadScene ("Menu");
 		}
 	}
 
