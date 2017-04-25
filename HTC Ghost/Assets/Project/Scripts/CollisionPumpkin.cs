@@ -40,7 +40,12 @@ public class CollisionPumpkin : MonoBehaviour {
 			bool hitSomething = Physics.Raycast (lightPos, forwardVector, out hit, 10.0f);
 
 			if (centerIsInCone || (hitSomething && hit.transform == transform)) {
-				GetComponent<GhostStatus> ().m_Health--;
+				GhostStatus s = GetComponent<GhostStatus> ();
+				s.m_Health--;
+				if (!s.spotted) {
+					s.spotted = true;
+					Debug.Log (Time.time - s.spawnTime);
+				}
 				SteamVR_Controller.Input ((int)flashlight.GetComponent<SteamVR_TrackedObject> ().index).TriggerHapticPulse (2000);
 			}
 		}

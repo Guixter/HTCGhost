@@ -58,7 +58,7 @@ public class SpawnGhost : MonoBehaviour {
 
 			ghostRedCount--;
 			if (ghostRedCount <= 0) {
-				ghostRedCount = 5;
+				ghostRedCount = Constants.GHOST_GREEN_TRESHOLD;
 				Instantiate (ghostGreen, spawn, spawnRotation);
 			}
 			else {
@@ -66,8 +66,8 @@ public class SpawnGhost : MonoBehaviour {
 			}
 			ghostCount++;
 
-			if (ghostCount % 5 == 0)
-				ghostSpawnTime = ghostSpawnTime - 1.0f;
+			if (ghostCount % Constants.GHOST_WAVES_SIZE == 0)
+				ghostSpawnTime = Mathf.Max(ghostSpawnTime - Constants.GHOST_SPAWN_TIME_DECR, Constants.GHOST_MIN_SPAWN_TIME);
 			
 			m_CanSpawn = false;
 

@@ -8,8 +8,13 @@ public class GhostStatus : MonoBehaviour {
 	public float m_Speed;
 	public int score;
 
+	public bool spotted;
+	public float spawnTime;
+
 	// Use this for initialization
 	void Start () {
+		spotted = false;
+		spawnTime = Time.time;
 	}
 	
 	// Update is called once per frame

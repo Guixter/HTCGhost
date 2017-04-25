@@ -11,6 +11,10 @@ public static class Constants {
 	public const float GHOST_SPAWN_ANGLE_MIN = -35f;
 	public const float GHOST_SPAWN_ANGLE_MAX = 10f;
 	public const float GHOST_SPAWN_TIME = 5;
+	public const float GHOST_MIN_SPAWN_TIME = 1;
+	public const float GHOST_SPAWN_TIME_DECR = 1;
+	public const int GHOST_WAVES_SIZE = 5;
+	public const int GHOST_GREEN_TRESHOLD = 5;
 
 
 	/*

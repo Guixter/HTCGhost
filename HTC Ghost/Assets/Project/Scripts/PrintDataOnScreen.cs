@@ -67,13 +67,12 @@ public class PrintDataOnScreen : MonoBehaviour {
 			gameOverText.GetComponent<Text> ().text = "Your score : " + playerScore + "\nBest score : " + PlayerPrefs.GetInt ("Highscore");
 			gameOverCanvas.SetActive (true);
 */
-			SceneManager.LoadScene ("GameOver");
-			//Waitt();
+			//SceneManager.LoadScene ("GameOver");
+			StartCoroutine(Waitt());
 		}
 	}
 
 	IEnumerator Waitt() {
-
 		yield return new WaitForSeconds(3.0f);
 		SceneManager.LoadScene ("GameOver");
 	}
