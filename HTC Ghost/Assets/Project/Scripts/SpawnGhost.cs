@@ -9,6 +9,11 @@ public class SpawnGhost : MonoBehaviour {
 	public GameObject player;
 	public GameObject target;
 
+	public float height;
+	public float rot;
+	public bool testHeight;
+	public bool testRot;
+
 	private CharacterController characterController;
 
 	private GameObject m_GhostSpawned;
@@ -42,6 +47,16 @@ public class SpawnGhost : MonoBehaviour {
 			float randRotationX = Random.Range (Constants.GHOST_SPAWN_ANGLE_MIN, Constants.GHOST_SPAWN_ANGLE_MAX);
 
 			float randRotationY = Random.Range(0.0f, 360.0f);
+
+			if (testHeight) {
+				randRotationX = height;
+			}
+
+			/*if (testRot) {
+				randRotationY = rot;
+			}*/
+
+			Debug.Log ('*' + randRotationY);
 
 
 			//Vector3 newDirection = Vector3.RotateTowards (spawn, m_CameraDirection, 1.0f, 0.0f);
