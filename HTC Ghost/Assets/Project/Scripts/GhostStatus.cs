@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Handles the status of a pumpkin.
+ */
 public class GhostStatus : MonoBehaviour {
 
-	public int m_Health;
-	public float m_Speed;
+	public int health;
 	public int score;
 
 	public bool spotted;
@@ -19,22 +21,9 @@ public class GhostStatus : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (m_Health <= 0) {
-			if (GameObject.Find ("DataOnScreen") != null) {
-				PrintDataOnScreen print = GameObject.Find ("DataOnScreen").GetComponent<PrintDataOnScreen> ();
-				print.playerScore += this.score;
-				print.PrintScore ();
-				Destroy (this.gameObject);
-			}
+		if (health <= 0) {
+			GameObject.Find ("GameManager").GetComponent<PlayerManager>().AddScore(this.score);
+			Destroy (this.gameObject);
 		}
-	}
-
-	int GetHealth() {
-		return this.m_Health;
-	}
-
-	void SetHealth(int newHealth) {
-		m_Health = newHealth;
-
 	}
 }
