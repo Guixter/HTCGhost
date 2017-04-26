@@ -11,15 +11,21 @@ public static class Constants {
 	public const float GHOST_SPAWN_ANGLE_MIN = -35f;
 	public const float GHOST_SPAWN_ANGLE_MAX = 10f;
 	public const float GHOST_SPAWN_TIME = 5;
+	public const float GHOST_MIN_SPAWN_TIME = 1;
+	public const float GHOST_SPAWN_TIME_DECR = 1;
+	public const int GHOST_WAVES_SIZE = 5;
+	public const int GHOST_GREEN_TRESHOLD = 5;
 
 
 	/*
 	TODO :
-		- sons (mort, ...)
-		- écran de gameover
-		- credits, etc
+		- sons (mort, ...) (GOOD)
 		- prefabs de citrouilles différentes (et système de vague)
+		- corriger le problème de collision de la lumière dans la citrouille quand la citrouille est trop proche (GOOD)
+		- best score à tester (GOOD)
+		- vérifier la cohérence du gameover (affichage de travers et pas de selecction)
 		- stats du prof
-		- corriger le problème de collision de la lumière dans la citrouille quand la citrouille est trop proche
+
+		- le curseur decale sur le menu
 	*/
 }

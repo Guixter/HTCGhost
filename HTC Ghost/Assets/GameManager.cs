@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-	private bool pause;
-
 	// 1
 	private SteamVR_TrackedObject trackedObj;
 	// 2
@@ -17,7 +15,6 @@ public class GameManager : MonoBehaviour {
 	void Awake()
 	{
 		trackedObj = GetComponent<SteamVR_TrackedObject>();
-		pause = false;
 	}
 
 	// Update is called once per frame

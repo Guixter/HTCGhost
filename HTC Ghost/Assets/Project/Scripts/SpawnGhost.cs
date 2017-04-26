@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class SpawnGhost : MonoBehaviour {
 
-	public GameObject ghost;
+	public GameObject ghostRed;
+	public GameObject ghostGreen;
 	public GameObject player;
 	public GameObject target;
+
+	public float height;
+	public float rot;
+	public bool testHeight;
+	public bool testRot;
 
 	private CharacterController characterController;
 
@@ -19,6 +25,10 @@ public class SpawnGhost : MonoBehaviour {
 
 	private Vector3 m_CameraPosition;
 	private Vector3 m_CameraDirection;
+	private int ghostRedCount = 5;
+	private int ghostCount;
+	private float ghostSpawnTime = Constants.GHOST_SPAWN_TIME;
+
 
 	// Use this for initialization
 	void Start () {
@@ -38,6 +48,16 @@ public class SpawnGhost : MonoBehaviour {
 
 			float randRotationY = Random.Range(0.0f, 360.0f);
 
+			if (testHeight) {
+				randRotationX = height;
+			}
+
+			/*if (testRot) {
+				randRotationY = rot;
+			}*/
+
+			Debug.Log ('*' + randRotationY);
+
 
 			//Vector3 newDirection = Vector3.RotateTowards (spawn, m_CameraDirection, 1.0f, 0.0f);
 
@@ -50,21 +70,33 @@ public class SpawnGhost : MonoBehaviour {
 
 			Vector3 spawn =  m_CameraPosition + (Quaternion.Euler(0, randRotationY, 0) * Quaternion.Euler(randRotationX, 0, 0)) * (Vector3.forward * Constants.GHOST_SPAWN_RADIUS);
 			Quaternion spawnRotation = Quaternion.Euler (-90.0f, 0.0f, 0.0f);
-			Instantiate (ghost, spawn, spawnRotation);
 
+			ghostRedCount--;
+			if (ghostRedCount <= 0) {
+				ghostRedCount = Constants.GHOST_GREEN_TRESHOLD;
+				Instantiate (ghostGreen, spawn, spawnRotation);
+			}
+			else {
+				Instantiate (ghostRed, spawn, spawnRotation);
+			}
+			ghostCount++;
+
+			if (ghostCount % Constants.GHOST_WAVES_SIZE == 0)
+				ghostSpawnTime = Mathf.Max(ghostSpawnTime - Constants.GHOST_SPAWN_TIME_DECR, Constants.GHOST_MIN_SPAWN_TIME);
+			
 			m_CanSpawn = false;
 
 			if (!m_CoroutineStarted) StartCoroutine(SpawnTimer());
 		}
 
-
+	 
 
 	}
 
 	IEnumerator SpawnTimer() {
 		
 		m_CoroutineStarted = true;
-		yield return new WaitForSeconds(Constants.GHOST_SPAWN_TIME);
+		yield return new WaitForSeconds(ghostSpawnTime);
 		m_CanSpawn = true;
 		StartCoroutine(SpawnTimer());
 	}

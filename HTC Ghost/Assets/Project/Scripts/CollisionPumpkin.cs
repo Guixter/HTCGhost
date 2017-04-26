@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CollisionPumpkin : MonoBehaviour {
 
-	private Light light;
-	private SphereCollider collider;
+	private Light flashlight;
+	private SphereCollider pumpkinCollider;
 
 	// Use this for initialization
 	void Start () {
@@ -19,25 +19,34 @@ public class CollisionPumpkin : MonoBehaviour {
 
 		if (GameObject.FindGameObjectWithTag ("torchLight").activeInHierarchy) {
 
-			light = GameObject.FindGameObjectWithTag ("torchLight").GetComponent<Light> ();
-			collider = GetComponent<SphereCollider> ();
+			flashlight = GameObject.FindGameObjectWithTag ("torchLight").GetComponent<Light> ();
+			pumpkinCollider = GetComponent<SphereCollider> ();
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		if (collider && light) {
+		if (pumpkinCollider && flashlight) {
 			
-			Vector3 pos = transform.position + collider.center;
-			Vector3 lightPos = light.transform.position;
+			Vector3 pos = transform.position;// + pumpkinCollider.center;
+			Vector3 lightPos = flashlight.transform.position;
 
 			Vector3 lightToPump = (pos - lightPos).normalized;
-			Vector3 forwardVector = light.transform.forward;
+			Vector3 forwardVector = flashlight.transform.forward;
+			bool centerIsInCone = Vector3.Dot (lightToPump, forwardVector) > Mathf.Cos (flashlight.spotAngle * Mathf.PI / 360);
 
-			if (Vector3.Dot (lightToPump, forwardVector) > Mathf.Cos (light.spotAngle * Mathf.PI / 360)) {
-				GetComponent<GhostStatus> ().m_Health--;
-				SteamVR_Controller.Input ((int)light.GetComponent<SteamVR_TrackedObject> ().index).TriggerHapticPulse (2000);
+			RaycastHit hit;
+			bool hitSomething = Physics.Raycast (lightPos, forwardVector, out hit, 10.0f);
+
+			if (centerIsInCone || (hitSomething && hit.transform == transform)) {
+				GhostStatus s = GetComponent<GhostStatus> ();
+				s.m_Health--;
+				if (!s.spotted) {
+					s.spotted = true;
+					Debug.Log (Time.time - s.spawnTime);
+				}
+				SteamVR_Controller.Input ((int)flashlight.GetComponent<SteamVR_TrackedObject> ().index).TriggerHapticPulse (2000);
 			}
 		}
 	}

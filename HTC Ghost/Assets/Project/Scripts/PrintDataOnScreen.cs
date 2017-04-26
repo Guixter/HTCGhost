@@ -7,32 +7,32 @@ using UnityEngine.SceneManagement;
 public class PrintDataOnScreen : MonoBehaviour {
 
 
-	public int playerLife;
-	public int playerScore;
-	public GameObject parent;
-
-	/*private int livesLeftOnScreen = 0;
-	private int scoreOnScreen = 0;*/
+	private int highscore;
 
 	private Transform score;
-
-	private Canvas canvas;
-
+	//private Canvas canvas;
 	private Vector2 anchorMinRef;
 	private Vector2 anchorMaxRef;
 	private List<Image> imagesOfLives;
-
+	private bool isGameOver;
 
 	public Image lifePrefab;
 	public Vector2 translation;
 	public int initialNumberOfLives;
 	public Sprite off;
+	public GameObject gameOverCanvas, gameOverText;
+
+	public int playerLife;
+	public int playerScore;
+	public GameObject parent;
 
 	// Use this for initialization
 	void Start () {
+		
+		highscore = PlayerPrefs.GetInt ("Highscore");
+
 		this.score = this.transform.FindChild ("Score");
-		this.canvas = FindObjectOfType<Canvas> ();
-		Debug.Log (score);
+		//this.canvas = FindObjectOfType<Canvas> ();
 		anchorMaxRef = lifePrefab.rectTransform.anchorMax;
 		anchorMinRef = lifePrefab.rectTransform.anchorMin;
 		this.initLives (initialNumberOfLives);
@@ -53,8 +53,28 @@ public class PrintDataOnScreen : MonoBehaviour {
 
 	private void CheckGameOver() {
 		if (playerLife <= 0) {
-			SceneManager.LoadScene ("Menu");
+			isGameOver = true;
+			PlayerPrefs.SetInt ("PlayerScore", playerScore);
+
+			AudioSource deathSound = GetComponent<AudioSource>();
+			deathSound.Play();
+
+			if (playerScore > highscore) {
+				PlayerPrefs.SetInt ("Highscore", playerScore);
+			}
+
+		/*	Time.timeScale = 0;
+			gameOverText.GetComponent<Text> ().text = "Your score : " + playerScore + "\nBest score : " + PlayerPrefs.GetInt ("Highscore");
+			gameOverCanvas.SetActive (true);
+*/
+			//SceneManager.LoadScene ("GameOver");
+			StartCoroutine(Waitt());
 		}
+	}
+
+	IEnumerator Waitt() {
+		yield return new WaitForSeconds(3.0f);
+		SceneManager.LoadScene ("GameOver");
 	}
 
 	private void initLives(int initialNumberOfLives){
@@ -93,11 +113,11 @@ public class PrintDataOnScreen : MonoBehaviour {
 	public void PrintCurrentLife(){
 		initLives(initialNumberOfLives);
 		livesLost (initialNumberOfLives - playerLife);
-		CheckGameOver();
+		if (!isGameOver) CheckGameOver();
 	}
 
 	public void PrintScore() {
-		if (this.score.gameObject.active) {
+		if (this.score.gameObject.activeInHierarchy) {
 			this.score.GetComponent<Text> ().text = "Score : " + playerScore;
 		}
 	}
