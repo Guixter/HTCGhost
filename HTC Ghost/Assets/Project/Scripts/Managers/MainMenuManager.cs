@@ -15,7 +15,7 @@ public class MainMenuManager : MonoBehaviour {
 
 	// Play the game
 	public void Play() {
-		SceneManager.LoadScene ("Warren");
+		SceneManager.LoadScene ("Game");
 	}
 
 	// Go to the menu
