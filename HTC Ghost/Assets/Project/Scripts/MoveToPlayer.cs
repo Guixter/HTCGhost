@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Handles the movement of a ghost.
+ */
 public class MoveToPlayer : MonoBehaviour {
 
 	private Rigidbody m_Rb;
@@ -11,7 +14,6 @@ public class MoveToPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 		m_Rb = GetComponent<Rigidbody> ();
 		m_FirstTime = false;
 	}
