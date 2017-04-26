@@ -50,7 +50,7 @@ public class SpawnGhost : MonoBehaviour {
 			if (testHeight) {
 				randRotationX = height;
 			}
-			Debug.Log ('*' + randRotationY);
+			Debug.Log ("ANGLE - " + randRotationY);
 
 
 			m_CameraPosition = target.transform.position;
